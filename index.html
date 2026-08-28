@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>15 → 1 | Learn. Understand. Explain.</title>
+  <meta name="description" content="A focused learning challenge: research for 15 minutes, then explain what you learned in 1 or 2 minutes." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" onclick="showHome(); return false;">
+        <span class="brand-mark">15<span>→</span>1</span>
+        <span class="brand-tagline">Learn. Understand. Explain.</span>
+      </a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">☀</button>
+    </header>
+
+    <main>
+      <section id="home" class="page active">
+        <div class="hero">
+          <div class="eyebrow">THE DAILY KNOWLEDGE CHALLENGE</div>
+          <h1>Learn something.<br><span>Explain it.</span></h1>
+          <p>Pick a topic, spend 15 minutes learning it, then see if you can explain it from memory.</p>
+          <div class="hero-actions">
+            <button class="primary-btn" onclick="startRandom()">🎲 Random Topic</button>
+            <button class="secondary-btn" onclick="showTopics()">Browse Topics</button>
+          </div>
+        </div>
+
+        <div class="how-grid">
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <div class="step-icon">📖</div>
+            <h3>Research</h3>
+            <p>Spend 15 focused minutes learning about a subject.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <div class="step-icon">🧠</div>
+            <h3>Recall</h3>
+            <p>Put your sources away and organize what you remember.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <div class="step-icon">🎙️</div>
+            <h3>Explain</h3>
+            <p>Give yourself 1 or 2 minutes to explain it clearly.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="topics" class="page">
+        <div class="section-heading">
+          <button class="back-btn" onclick="showHome()">← Home</button>
+          <div>
+            <div class="eyebrow">CHOOSE YOUR CHALLENGE</div>
+            <h2>Pick a topic</h2>
+          </div>
+        </div>
+        <div id="topicGrid" class="topic-grid"></div>
+      </section>
+
+      <section id="challenge" class="page">
+        <div class="challenge-top">
+          <button class="back-btn" onclick="showTopics()">← Topics</button>
+          <div class="category-pill" id="categoryPill"></div>
+        </div>
+
+        <div class="topic-header">
+          <div class="eyebrow">TODAY'S CHALLENGE</div>
+          <h2 id="topicTitle">Topic</h2>
+          <p id="topicPrompt"></p>
+        </div>
+
+        <div class="timer-card">
+          <div class="timer-label" id="timerLabel">RESEARCH</div>
+          <div class="timer" id="timer">15:00</div>
+          <div class="timer-sub" id="timerSub">Learn as much as you can.</div>
+          <div class="timer-actions">
+            <button class="primary-btn" id="timerBtn" onclick="toggleTimer()">Start Timer</button>
+            <button class="ghost-btn" onclick="resetTimer()">Reset</button>
+          </div>
+          <div class="progress-track"><div id="progressBar"></div></div>
+        </div>
+
+        <div class="notes-card">
+          <div class="notes-head">
+            <div>
+              <h3>Quick notes</h3>
+              <p>Jot down the things you don't want to forget.</p>
+            </div>
+            <button class="clear-btn" onclick="clearNotes()">Clear</button>
+          </div>
+          <textarea id="notes" placeholder="Key ideas, names, dates, questions..."></textarea>
+        </div>
+
+        <div class="explain-card">
+          <div>
+            <div class="eyebrow">NEXT STEP</div>
+            <h3>Ready to explain it?</h3>
+            <p>When the 15-minute research timer is finished, choose your speaking time.</p>
+          </div>
+          <div class="explain-buttons">
+            <button class="primary-btn" onclick="startExplain(60)">1 minute</button>
+            <button class="secondary-btn" onclick="startExplain(120)">2 minutes</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="explain" class="page">
+        <div class="challenge-top">
+          <button class="back-btn" onclick="showChallenge()">← Challenge</button>
+          <div class="category-pill">SPEAKING ROUND</div>
+        </div>
+
+        <div class="topic-header centered">
+          <div class="eyebrow">NO NOTES. NO SEARCH.</div>
+          <h2>Explain <span id="explainTopic">it</span>.</h2>
+          <p>Talk out loud as if you're teaching someone who knows nothing about the subject.</p>
+        </div>
+
+        <div class="timer-card explain-timer-card">
+          <div class="timer-label">EXPLAIN</div>
+          <div class="timer" id="explainTimer">1:00</div>
+          <div class="timer-sub">Make it simple. Make it clear.</div>
+          <div class="timer-actions">
+            <button class="primary-btn" id="explainBtn" onclick="toggleExplainTimer()">Start Timer</button>
+            <button class="ghost-btn" onclick="resetExplainTimer()">Reset</button>
+          </div>
+          <div class="progress-track"><div id="explainProgress"></div></div>
+        </div>
+
+        <div class="reflection-card">
+          <h3>How did you do?</h3>
+          <div class="reflection-grid">
+            <button onclick="finishChallenge('Easy')">😎 Easy</button>
+            <button onclick="finishChallenge('Okay')">🙂 Okay</button>
+            <button onclick="finishChallenge('Hard')">😅 Hard</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="complete" class="page">
+        <div class="complete-card">
+          <div class="complete-icon">✓</div>
+          <div class="eyebrow">CHALLENGE COMPLETE</div>
+          <h2>You did it.</h2>
+          <p>You spent focused time learning <strong id="completeTopic"></strong> and practiced explaining it from memory.</p>
+          <div class="result-box">
+            <span>Your confidence</span>
+            <strong id="confidenceResult">—</strong>
+          </div>
+          <div class="complete-actions">
+            <button class="primary-btn" onclick="startRandom()">Another Topic</button>
+            <button class="secondary-btn" onclick="showTopics()">Browse Topics</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>15 → 1</span>
+      <span>Built for curiosity.</span>
+    </footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
